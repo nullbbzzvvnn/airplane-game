@@ -9,6 +9,8 @@
         --hud: #7ef9a8;
         --panel: rgba(5, 10, 14, 0.55);
         --panel-border: rgba(126, 249, 168, 0.8);
+        --danger: #ff5d5d;
+        --amber: #ffb347;
       }
 
       * { box-sizing: border-box; }
@@ -41,7 +43,7 @@
         box-shadow: 0 0 10px rgba(126, 249, 168, 0.2);
         color: var(--hud);
         font-family: "Courier New", Courier, monospace;
-        padding: 12px 14px;
+        padding: 10px 12px;
         border-radius: 8px;
         backdrop-filter: blur(2px);
       }
@@ -49,19 +51,19 @@
       #hud {
         top: 18px;
         left: 18px;
-        min-width: 220px;
+        min-width: 240px;
       }
 
       #hud .row {
         display: flex;
         justify-content: space-between;
-        gap: 12px;
+        gap: 14px;
         margin: 4px 0;
-        font-size: 14px;
+        font-size: 13px;
       }
 
       #hud .label {
-        opacity: 0.85;
+        opacity: 0.9;
       }
 
       #controls {
@@ -127,8 +129,8 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        width: 28px;
-        height: 28px;
+        width: 30px;
+        height: 30px;
         transform: translate(-50%, -50%);
         border: 1px solid rgba(126, 249, 168, 0.8);
         border-radius: 50%;
@@ -146,16 +148,43 @@
         left: 50%;
         top: 2px;
         width: 1px;
-        height: 24px;
+        height: 26px;
         transform: translateX(-50%);
       }
 
       #crosshair::after {
         top: 50%;
         left: 2px;
-        width: 24px;
+        width: 26px;
         height: 1px;
         transform: translateY(-50%);
+      }
+
+      #cockpit-panel {
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        width: 260px;
+        font-size: 12px;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px 12px;
+        margin-top: 8px;
+      }
+
+      .metric {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      #landing-status {
+        margin-top: 8px;
+        font-size: 12px;
+        color: var(--amber);
+        min-height: 18px;
       }
     </style>
   </head>
@@ -166,6 +195,7 @@
         <div class="row"><span class="label">SPD</span><span id="speed">0</span>km/h</div>
         <div class="row"><span class="label">HDG</span><span id="heading">0</span>°</div>
         <div class="row"><span class="label">POS</span><span id="position">0, 0</span></div>
+        <div class="row"><span class="label">VSI</span><span id="vsi">0</span>fpm</div>
         <div class="row"><span class="label">FPS</span><span id="fps">60</span></div>
       </div>
 
@@ -179,12 +209,26 @@
         <div class="center"></div>
       </div>
 
+      <div id="cockpit-panel" class="panel">
+        <div style="font-weight:bold; margin-bottom:8px;">FLIGHT SYSTEMS</div>
+        <div class="metrics">
+          <div class="metric"><span>ENGINE</span><span id="engine-status">OFF</span></div>
+          <div class="metric"><span>FUEL</span><span id="fuel">1000</span></div>
+          <div class="metric"><span>N1</span><span id="n1">0%</span></div>
+          <div class="metric"><span>N2</span><span id="n2">0%</span></div>
+          <div class="metric"><span>EGT</span><span id="egt">0°C</span></div>
+          <div class="metric"><span>FF</span><span id="ff">0</span></div>
+          <div class="metric"><span>OIL</span><span id="oil">0</span></div>
+        </div>
+        <div id="landing-status">READY FOR TAKEOFF</div>
+      </div>
+
       <div id="controls" class="panel">
-        W / S = Speed<br />
-        A / D = Bank<br />
+        W / S = Throttle<br />
+        A / D = Yaw<br />
         Space = Climb<br />
         Shift = Dive<br />
-        Mouse = Look<br />
+        E = Engine<br />
         R = Reset
       </div>
     </div>
